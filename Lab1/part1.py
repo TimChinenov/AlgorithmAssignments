@@ -28,44 +28,40 @@ if __name__=="__main__":
 
 
     #Script to demonstrate individual timing
-    # fib1Val = '''fib1(n)'''
-    # fib2Val = '''fib2(n)'''
-    #
-    #
-    # print(timeit.timeit(stmt = fib1Val,setup="from __main__ import fib1; \
-    #         n = input('Enter Fibonacci number to be calculated: ')"))
-    #
-    # print(timeit.timeit(stmt = fib2Val,setup="from __main__ import fib2; \
-    #         n = input('Enter Fibonacci number to be calculated: ')"))
+    #n = int(raw_input('Enter Fibonacci number to be calculated: '))
+    #startTime = timeit.default_timer()
+    #fib2(n)
+    #finTime = timeit.default_timer()
+    #print "iterative: " + str(finTime - startTime)
+    
+    
+    #startTime = timeit.default_timer()
+    #fib1(n)
+    #finTime = timeit.default_timer()
+    #print "Recursive: " + str(finTime - startTime)
 
     #Script to plot time difference between the two Algorithm
-    def setup(): #Used to give fib number to the timeit module
-        return setup_data
-
     #setup code that is run by timeit module.
-    setup_code = """from __main__ import fib1, fib2, setup
-data = setup()
-    """
-
     fib1Time = []
     fib2Time = []
-    values = [1,5,10,15,20,25,30,35,40,41,42,43]
+    values = [1,5,10,15,20,25,30,35,40]#,41,42,43]
 
     #The functions that will be run
-    fib1Val = '''fib1(data)'''
-    fib2Val = '''fib2(data)'''
-
-    for num in values:
-        setup_data = num
-        fib1Time.append(timeit.timeit(fib1Val,setup_code))
-        fib2Time.append(timeit.timeit(fib2Val,setup_code))
-
-    print fib1Time
-    print fib2Time
-
-    ans = input("Do you want to plot data? (y/n)")
+    for n in values:
+        startTime = timeit.default_timer()
+        fib1(n)
+        finTime = timeit.default_timer()
+        fib1Time.append(finTime - startTime)
+        
+        startTime = timeit.default_timer()
+        fib2(n)
+        finTime = timeit.default_timer()
+        fib2Time.append(finTime - startTime)
+        
+    ans = raw_input("Do you want to plot data? (y/n) ")
     if ans == "y":
         import matplotlib.pyplot as plt
-        plt.plot(fib1Time, values, 'r-')
-        plt.plot(fib2Time, values, 'b-')
+        plt.plot(values, fib1Time, marker='o', label='Recursive')
+        plt.plot(values, fib2Time, marker='o', label='Iterative')
+        plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
         plt.show()

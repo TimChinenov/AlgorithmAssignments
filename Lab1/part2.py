@@ -9,19 +9,20 @@ def fib2(n):
 
 if __name__=="__main__":
     import timeit
-    #import matplotlib as plt
+    import matplotlib as plt
 
-    def setup():
-        return setup_data
-
-    setup_code='''from __main__ import fib2, setup
-data = setup()'''
-    func_code = '''fib2(data)'''
-
-    values = [2**10,2**12,2**14,2**16,2**18]#,2**19]
+    values = [2**10,2**12,2**14,2**16]#,2**18,2**19]
     timeValues = []
     for value in values:
-        setup_data = value
-        timeValues.append(timeit.timeit(func_code,setup_code))
-
-    print timeValues
+        print "started: " + str(value)
+        startTime = timeit.default_timer()
+        fib2(value)
+        finTime = timeit.default_timer()
+        timeValues.append(finTime - startTime)
+        print "finished: " + str(value)
+        
+    ans = raw_input("Do you want to plot data? (y/n) ")
+    if ans == "y":
+        import matplotlib.pyplot as plt
+        plt.plot(values, timeValues, marker='o')
+        plt.show()    
